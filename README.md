@@ -1,4 +1,4 @@
-# Documentation for Aps360 Project (unnamed for now)
+# Documentation for APS360 Project (unnamed for now)
 Team: Shirley, Justin, Apurva, Ryan
 
 ## Project Description
