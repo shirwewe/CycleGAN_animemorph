@@ -1,24 +1,33 @@
 import torch
+import torch.nn as nn
+import torch.optim as optim
+import time
+from torch.utils.data import Dataset, DataLoader, SubsetRandomSampler
+from torch.utils.data import DataLoader, Subset
+from torchvision.datasets import ImageFolder
+from torchvision import transforms
+import numpy as np
+import os
+import shutil
+from PIL import Image
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-print(f"using device: {DEVICE}")
-
 TRAIN_DIR = "data/train"
 VAL_DIR = "data/val"
-BATCH_SIZE = 1
-LEARNING_RATE = 1e-5
-LAMBDA_IDENTITY = 0.0 # loss weight for identity loss
+BATCH_SIZE = 16
+LEARNING_RATE = 0.01
+LAMBDA_IDENTITY = 0.0  # loss weight for identity loss
 LAMBDA_CYCLE = 10
 NUM_WORKERS = 4
-NUM_EPOCHS = 50
+NUM_EPOCHS = 1
 LOAD_MODEL = True
 SAVE_MODEL = True
-CHECKPOINT_GENERATOR_H = "models/genh.pth.tar"
-CHECKPOINT_GENERATOR_Z = "models/genz.pth.tar"
-CHECKPOINT_DISCRIMINATOR_H = "models/disch.pth.tar"
-CHECKPOINT_DISCRIMINATOR_Z = "models/discz.pth.tar"
+CHECKPOINT_GENERATOR_ANIME = "models/gen_anime"
+CHECKPOINT_GENERATOR_HUMAN = "models/gen_human"
+CHECKPOINT_DISCRIMINATOR_ANIME = "models/disc_anime"
+CHECKPOINT_DISCRIMINATOR_HUMAN = "models/disc_human"
 
 transforms = A.Compose(
     [
