@@ -30,12 +30,9 @@ class Generator(nn.Module):
             self._block(features_g*16, features_g*8, 4, 2, 1), #16 x 16
             self._block(features_g*8, features_g*4, 4, 2, 1), #32 x 32
             self._block(features_g*4, features_g*2, 4, 2, 1), #64 x 64
-            self._block(features_g*2, features_g, 4, 2, 1), #128 x 128
-            nn.ConvTranspose2d(features_g, channels_img, kernel_size=4, stride=2, padding=1,), # 256 x 256
+            nn.ConvTranspose2d(features_g*2, channels_img, kernel_size=4, stride=2, padding=1,), # 128 x 128
             nn.Tanh(), #[-1, 1]
         )
-
-        #TO DO: Change so output is 256x256
     def _block(self, in_channels, out_channels, kernel_size, stride, padding):
         return nn.Sequential(
             nn.ConvTranspose2d(
@@ -65,7 +62,7 @@ def initialize_weight(model):
 
 #to be deleted later
 def test():
-    N, in_channels, H, W = 8,3,256,256
+    N, in_channels, H, W = 8,3,128, 128
     z_dim = 100
     gen = Generator(z_dim, in_channels, 32)
     initialize_weight(gen)
