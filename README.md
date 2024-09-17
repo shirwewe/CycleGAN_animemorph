@@ -1,4 +1,4 @@
-# Documentation for APS360 Project (unnamed for now)
+# Documentation for APS360 Project (ANIMEMORPH)
 Team: Shirley, Justin, Apurva, Ryan
 
 ## Project Description
